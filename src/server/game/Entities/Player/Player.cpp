@@ -5728,6 +5728,14 @@ void Player::CheckAreaExploreAndOutdoor()
                 }
 
                 sScriptMgr->OnGivePlayerXP(this, XP, nullptr, PlayerXPSource::XPSOURCE_EXPLORE);
+				if(GetSession()->IsPremium())
+                    XP *= sWorld->getRate(RATE_XP_EXPLORE_PREMIUM);
+				if(GetSession()->IsPremium2())
+                    XP *= sWorld->getRate(RATE_XP_EXPLORE_PREMIUM2);
+				if(GetSession()->IsPremium3())
+                    XP *= sWorld->getRate(RATE_XP_EXPLORE_PREMIUM3);
+				if(GetSession()->IsPremium4())
+                    XP *= sWorld->getRate(RATE_XP_EXPLORE_PREMIUM4);
                 GiveXP(XP, nullptr);
                 SendExplorationExperience(areaId, XP);
             }
@@ -6088,6 +6096,14 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize, int32 honor, bool awar
 
     honor_f *= sWorld->getRate(RATE_HONOR);
     // Back to int now
+	if(GetSession()->IsPremium())
+       honor_f *= sWorld->getRate(RATE_HONOR_PREMIUM);
+   if(GetSession()->IsPremium2())
+       honor_f *= sWorld->getRate(RATE_HONOR_PREMIUM2);
+   if(GetSession()->IsPremium3())
+       honor_f *= sWorld->getRate(RATE_HONOR_PREMIUM3);
+   if(GetSession()->IsPremium4())
+       honor_f *= sWorld->getRate(RATE_HONOR_PREMIUM4);
     honor = int32(honor_f);
     // honor - for show honor points in log
     // victim_guid - for show victim name in log

@@ -247,6 +247,12 @@ struct AuthSession
     uint64 DosResponse = 0;
     Acore::Crypto::SHA1::Digest Digest = {};
     std::string Account;
+	bool isPremium = false;
+	bool isPremium1 = false;
+	bool isPremium2 = false;
+	bool isPremium3 = false;
+	bool isPremium4 = false;
+	bool isPremium5 = false;
     ByteBuffer AddonInfo;
 };
 
@@ -523,7 +529,13 @@ void WorldSocket::HandleAuthSessionCallback(std::shared_ptr<AuthSession> authSes
     sha.UpdateData(_authSeed);
     sha.UpdateData(account.SessionKey);
     sha.Finalize();
-
+    bool isPremium = false;
+    bool isPremium1 = false;
+	bool isPremium2 = false;
+	bool isPremium3 = false;
+	bool isPremium4 = false;
+	
+	
     if (sha.GetDigest() != authSession->Digest)
     {
         SendAuthResponseError(AUTH_FAILED);
@@ -581,6 +593,52 @@ void WorldSocket::HandleAuthSessionCallback(std::shared_ptr<AuthSession> authSes
         return;
     }
 
+// Check premium
+    stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_PREMIUM);
+    stmt->SetData(0, account.Id);
+    PreparedQueryResult premresult = LoginDatabase.Query(stmt);
+
+    if (premresult)
+    {
+        isPremium = true;
+    }
+
+stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_PREMIUM2);
+    stmt->SetData(0, account.Id);
+    PreparedQueryResult premresult2 = LoginDatabase.Query(stmt);
+
+    if (premresult2)
+    {
+        isPremium2 = true;
+    }
+
+	 stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_PREMIUM3);
+    stmt->SetData(0, account.Id);
+    PreparedQueryResult premresult3 = LoginDatabase.Query(stmt);
+
+    if (premresult3)
+    {
+        isPremium3 = true;
+    }
+
+	 stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_PREMIUM4);
+    stmt->SetData(0, account.Id);
+    PreparedQueryResult premresult4 = LoginDatabase.Query(stmt);
+
+    if (premresult4)
+    {
+        isPremium4 = true;
+    }
+// Check vip
+    stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_PREMIUM1);
+    stmt->SetData(0, account.Id);
+    PreparedQueryResult premresult1 = LoginDatabase.Query(stmt);
+
+    if (premresult1)
+    {
+        isPremium1 = true;
+    }
+	
     // Check locked state for server
     AccountTypes allowedAccountType = sWorld->GetPlayerSecurityLimit();
     LOG_DEBUG("network", "Allowed Level: {} Player Level {}", allowedAccountType, account.Security);
@@ -609,8 +667,8 @@ void WorldSocket::HandleAuthSessionCallback(std::shared_ptr<AuthSession> authSes
 
     sScriptMgr->OnLastIpUpdate(account.Id, address);
 
-    _worldSession = new WorldSession(account.Id, std::move(authSession->Account), shared_from_this(), account.Security,
-        account.Expansion, account.MuteTime, account.Locale, account.Recruiter, account.IsRectuiter, account.Security ? true : false, account.TotalTime);
+    _worldSession = new WorldSession(account.Id, std::move(authSession->Account), shared_from_this(), account.Security, isPremium, isPremium1, isPremium2, isPremium3, isPremium4,
+     account.Expansion, account.MuteTime, account.Locale, account.Recruiter, account.IsRectuiter, account.Security ? true : false, account.TotalTime);
 
     _worldSession->ReadAddonsInfo(authSession->AddonInfo);
 

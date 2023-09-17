@@ -509,6 +509,31 @@ void World::LoadConfigSettings(bool reload)
     _rate_values[RATE_XP_PET_NEXT_LEVEL]           = sConfigMgr->GetOption<float>("Rate.Pet.LevelXP", 0.05f);
     _rate_values[RATE_REPAIRCOST]                  = sConfigMgr->GetOption<float>("Rate.RepairCost", 1.0f);
 
+
+    _rate_values[RATE_XP_KILL_PREMIUM]    = sConfigMgr->GetOption<float>("Rate.XP.Kill.Premium", 1.0f);
+    _rate_values[RATE_XP_QUEST_PREMIUM]   = sConfigMgr->GetOption<float>("Rate.XP.Quest.Premium", 1.0f);
+    _rate_values[RATE_XP_EXPLORE_PREMIUM] = sConfigMgr->GetOption<float>("Rate.XP.Explore.Premium", 1.0f);
+    _rate_values[RATE_REPUTATION_PREMIUM] = sConfigMgr->GetOption<float>("Rate.Reputation.Premium", 1.0f);
+    _rate_values[RATE_HONOR_PREMIUM]      = sConfigMgr->GetOption<float>("Rate.Honor.Premium", 1.0f);
+	
+	_rate_values[RATE_XP_KILL_PREMIUM2]    = sConfigMgr->GetOption<float>("Rate.XP.Kill.Premium2", 1.0f);
+    _rate_values[RATE_XP_QUEST_PREMIUM2]   = sConfigMgr->GetOption<float>("Rate.XP.Quest.Premium2", 1.0f);
+    _rate_values[RATE_XP_EXPLORE_PREMIUM2] = sConfigMgr->GetOption<float>("Rate.XP.Explore.Premium2", 1.0f);
+    _rate_values[RATE_REPUTATION_PREMIUM2] = sConfigMgr->GetOption<float>("Rate.Reputation.Premium2", 1.0f);
+    _rate_values[RATE_HONOR_PREMIUM2]      = sConfigMgr->GetOption<float>("Rate.Honor.Premium2", 1.0f);
+
+    _rate_values[RATE_XP_KILL_PREMIUM3]    = sConfigMgr->GetOption<float>("Rate.XP.Kill.Premium3", 1.0f);
+    _rate_values[RATE_XP_QUEST_PREMIUM3]   = sConfigMgr->GetOption<float>("Rate.XP.Quest.Premium3", 1.0f);
+    _rate_values[RATE_XP_EXPLORE_PREMIUM3] = sConfigMgr->GetOption<float>("Rate.XP.Explore.Premium3", 1.0f);
+    _rate_values[RATE_REPUTATION_PREMIUM3] = sConfigMgr->GetOption<float>("Rate.Reputation.Premium3", 1.0f);
+    _rate_values[RATE_HONOR_PREMIUM3]      = sConfigMgr->GetOption<float>("Rate.Honor.Premium3", 1.0f);
+
+    _rate_values[RATE_XP_KILL_PREMIUM4]    = sConfigMgr->GetOption<float>("Rate.XP.Kill.Premium4", 1.0f);
+    _rate_values[RATE_XP_QUEST_PREMIUM4]   = sConfigMgr->GetOption<float>("Rate.XP.Quest.Premium4", 1.0f);
+    _rate_values[RATE_XP_EXPLORE_PREMIUM4] = sConfigMgr->GetOption<float>("Rate.XP.Explore.Premium4", 1.0f);
+    _rate_values[RATE_REPUTATION_PREMIUM4] = sConfigMgr->GetOption<float>("Rate.Reputation.Premium4", 1.0f);
+    _rate_values[RATE_HONOR_PREMIUM4]      = sConfigMgr->GetOption<float>("Rate.Honor.Premium4", 1.0f);
+	
     _rate_values[RATE_SELLVALUE_ITEM_POOR]         = sConfigMgr->GetOption<float>("Rate.SellValue.Item.Poor", 1.0f);
     _rate_values[RATE_SELLVALUE_ITEM_NORMAL]       = sConfigMgr->GetOption<float>("Rate.SellValue.Item.Normal", 1.0f);
     _rate_values[RATE_SELLVALUE_ITEM_UNCOMMON]     = sConfigMgr->GetOption<float>("Rate.SellValue.Item.Uncommon", 1.0f);

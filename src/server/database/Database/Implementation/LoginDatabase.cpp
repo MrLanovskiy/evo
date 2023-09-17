@@ -83,7 +83,19 @@ void LoginDatabaseConnection::DoPrepareStatements()
     PrepareStatement(LOGIN_UPD_EXPANSION, "UPDATE account SET expansion = ? WHERE id = ?", CONNECTION_ASYNC);
     PrepareStatement(LOGIN_UPD_ACCOUNT_LOCK, "UPDATE account SET locked = ? WHERE id = ?", CONNECTION_ASYNC);
     PrepareStatement(LOGIN_UPD_ACCOUNT_LOCK_COUNTRY, "UPDATE account SET lock_country = ? WHERE id = ?", CONNECTION_ASYNC);
-    PrepareStatement(LOGIN_UPD_USERNAME, "UPDATE account SET username = ? WHERE id = ?", CONNECTION_ASYNC);
+	PrepareStatement(LOGIN_UPD_EXPIRED_ACCOUNT_PREMIUM, "UPDATE account_premium SET active = 0 WHERE unsetdate<=UNIX_TIMESTAMP() AND unsetdate<>setdate", CONNECTION_SYNCH);
+    PrepareStatement(LOGIN_SEL_PREMIUM, "SELECT 1 FROM account_premium WHERE id = ? AND active = 1", CONNECTION_SYNCH);
+    PrepareStatement(LOGIN_UPD_EXPIRED_ACCOUNT_PREMIUM1, "UPDATE account_vip SET active = 0 WHERE unsetdate<=UNIX_TIMESTAMP() AND unsetdate<>setdate", CONNECTION_SYNCH);
+    PrepareStatement(LOGIN_SEL_PREMIUM1, "SELECT 1 FROM account_vip WHERE id = ? AND active = 1", CONNECTION_SYNCH);
+	
+    PrepareStatement(LOGIN_UPD_EXPIRED_ACCOUNT_PREMIUM2, "UPDATE account_premium2 SET active = 0 WHERE unsetdate<=UNIX_TIMESTAMP() AND unsetdate<>setdate", CONNECTION_SYNCH);
+    PrepareStatement(LOGIN_SEL_PREMIUM2, "SELECT 1 FROM account_premium2 WHERE id = ? AND active = 1", CONNECTION_SYNCH);
+	PrepareStatement(LOGIN_UPD_EXPIRED_ACCOUNT_PREMIUM3, "UPDATE account_premium3 SET active = 0 WHERE unsetdate<=UNIX_TIMESTAMP() AND unsetdate<>setdate", CONNECTION_SYNCH);
+    PrepareStatement(LOGIN_SEL_PREMIUM3, "SELECT 1 FROM account_premium3 WHERE id = ? AND active = 1", CONNECTION_SYNCH);
+	PrepareStatement(LOGIN_UPD_EXPIRED_ACCOUNT_PREMIUM4, "UPDATE account_premium4 SET active = 0 WHERE unsetdate<=UNIX_TIMESTAMP() AND unsetdate<>setdate", CONNECTION_SYNCH);
+    PrepareStatement(LOGIN_SEL_PREMIUM4, "SELECT 1 FROM account_premium4 WHERE id = ? AND active = 1", CONNECTION_SYNCH);
+
+	PrepareStatement(LOGIN_UPD_USERNAME, "UPDATE account SET username = ? WHERE id = ?", CONNECTION_ASYNC);
     PrepareStatement(LOGIN_UPD_MUTE_TIME, "UPDATE account SET mutetime = ? , mutereason = ? , muteby = ? WHERE id = ?", CONNECTION_ASYNC);
     PrepareStatement(LOGIN_UPD_MUTE_TIME_LOGIN, "UPDATE account SET mutetime = ? WHERE id = ?", CONNECTION_ASYNC);
     PrepareStatement(LOGIN_UPD_LAST_IP, "UPDATE account SET last_ip = ? WHERE username = ?", CONNECTION_ASYNC);

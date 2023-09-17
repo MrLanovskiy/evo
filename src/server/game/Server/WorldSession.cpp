@@ -100,7 +100,7 @@ bool WorldSessionFilter::Process(WorldPacket* packet)
 }
 
 /// WorldSession constructor
-WorldSession::WorldSession(uint32 id, std::string&& name, std::shared_ptr<WorldSocket> sock, AccountTypes sec, uint8 expansion,
+WorldSession::WorldSession(uint32 id, std::string&& name, std::shared_ptr<WorldSocket> sock, AccountTypes sec, bool ispremium, bool ispremium1, bool ispremium2, bool ispremium3, bool ispremium4, uint8 expansion,
     time_t mute_time, LocaleConstant locale, uint32 recruiter, bool isARecruiter, bool skipQueue, uint32 TotalTime) :
     m_muteTime(mute_time),
     m_timeOutTime(0),
@@ -111,6 +111,11 @@ WorldSession::WorldSession(uint32 id, std::string&& name, std::shared_ptr<WorldS
     _player(nullptr),
     m_Socket(sock),
     _security(sec),
+	_ispremium(ispremium),
+    _ispremium1(ispremium1),
+	_ispremium2(ispremium2),
+	_ispremium3(ispremium3),
+	_ispremium4(ispremium4),
     _skipQueue(skipQueue),
     _accountId(id),
     _accountName(std::move(name)),
