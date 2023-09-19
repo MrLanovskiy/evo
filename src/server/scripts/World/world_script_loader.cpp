@@ -35,7 +35,9 @@ void AddSC_server_mail();
 void AddSC_premium_account2();
 void AddSC_premium_account1();
 void AddSC_npc_premium_master();
-
+void AddSC_npc_premium_master2();
+void AddSC_npc_premium_master3();
+void AddSC_npc_premium_master4();
 
 // The name of this function should match:
 // void Add${NameOfDirectory}Scripts()
@@ -60,4 +62,7 @@ void AddWorldScripts()
 	AddSC_premium_account2();
     AddSC_premium_account1();
     AddSC_npc_premium_master();
+	AddSC_npc_premium_master2();
+    AddSC_npc_premium_master3();
+    AddSC_npc_premium_master4();
 }
