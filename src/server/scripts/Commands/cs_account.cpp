@@ -54,6 +54,7 @@ public:
         {
             { "addon",      SEC_GAMEMASTER,     true,   &HandleAccountSetAddonCommand,          "" },
             { "gmlevel",    SEC_CONSOLE,        true,   &HandleAccountSetGmLevelCommand,        "" },
+            { "viplevel",   SEC_CONSOLE,        true,   &HandleAccountSetVIPLevelCommand,       "" },
             { "password",   SEC_CONSOLE,        true,   &HandleAccountSetPasswordCommand,       "" },
             { "2fa",        SEC_PLAYER,         true,   &HandleAccountSet2FACommand,            "" }
         };
@@ -890,6 +891,67 @@ public:
         }
 
         handler->PSendSysMessage(LANG_YOU_CHANGE_SECURITY, targetAccountName.c_str(), gm);
+        return true;
+    }
+
+    static bool HandleAccountSetVIPLevelCommand(ChatHandler* handler, char const* args)
+    {
+        if (!*args)
+            return false;
+
+        std::string targetAccountName;
+        uint32 targetAccountId = 0;
+        uint32 targetVipLevel = 0;
+        uint32 expiryDateUnix = 0;
+
+        char* arg1 = strtok((char*)args, " ");
+        char* arg2 = strtok(nullptr, " ");
+        char* arg3 = strtok(nullptr, " ");
+
+        // Check for second parameter
+        if (!arg1 && !arg2 && !arg3)
+            return false;
+
+        // Check for account
+        targetAccountName = arg1;
+        targetVipLevel = atoi(arg2);
+        targetAccountId = AccountMgr::GetId(targetAccountName);
+        expiryDateUnix = atoi(arg3);
+
+        if (!Utf8ToUpperOnlyLatin(targetAccountName))
+        {
+            handler->PSendSysMessage(LANG_ACCOUNT_NOT_EXIST, targetAccountName.c_str());
+            handler->SetSentErrorMessage(true);
+            return false;
+        }
+
+        LoginDatabasePreparedStatement* stmt;
+
+        switch (targetVipLevel)
+        {
+        case 1:
+            stmt = LoginDatabase.GetPreparedStatement(LOGIN_RPL_VIP_LEVEL1);
+            break;
+        case 2:
+            stmt = LoginDatabase.GetPreparedStatement(LOGIN_RPL_VIP_LEVEL2);
+            break;
+        case 3:
+            stmt = LoginDatabase.GetPreparedStatement(LOGIN_RPL_VIP_LEVEL3);
+            break;
+        case 4:
+            stmt = LoginDatabase.GetPreparedStatement(LOGIN_RPL_VIP_LEVEL4);
+            break;
+        default:
+            stmt = LoginDatabase.GetPreparedStatement(LOGIN_RPL_VIP_LEVEL1);
+            break;
+        }
+
+        stmt->SetData(0, targetAccountId);
+        stmt->SetData(1, expiryDateUnix);
+
+        LoginDatabase.Execute(stmt);
+
+        handler->PSendSysMessage(LANG_YOU_CHANGE_SECURITY, targetAccountName.c_str(), targetVipLevel);
         return true;
     }
 
